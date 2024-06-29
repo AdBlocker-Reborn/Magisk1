@@ -1,3 +1,4 @@
+
 package com.topjohnwu.magisk.ui.surequest
 
 import android.annotation.SuppressLint
@@ -77,6 +78,7 @@ class SuRequestViewModel(
     fun grantPressed() {
         cancelTimer()
         if (Config.userAuth) {
+            Log.d("Magisk", "auth begin")
             AuthEvent { respond(ALLOW) }.publish()
         } else {
             respond(ALLOW)
@@ -131,16 +133,19 @@ class SuRequestViewModel(
 
     private fun respond(action: Int) {
         if (!initialized) {
+            Log.d("Magisk", "return")
             // ignore the response until showDialog done
             return
         }
 
+        Log.d("Magisk", "respond $action 1")
         timer.cancel()
 
         val pos = selectedItemPosition
         timeoutPrefs.edit().putInt(packageName, pos).apply()
 
         viewModelScope.launch {
+            Log.d("Magisk", "respond $action 2")
             handler.respond(action, Config.Value.TIMEOUT_LIST[pos])
             // Kill activity after response
             DieEvent().publish()
