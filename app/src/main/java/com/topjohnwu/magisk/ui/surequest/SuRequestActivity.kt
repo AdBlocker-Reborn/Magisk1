@@ -63,6 +63,6 @@ open class SuRequestActivity : UIActivity<ActivityRequestBinding>() {
     }
 
     override fun finish() {
-        //super.finishAndRemoveTask()
+        super.finishAndRemoveTask()
     }
 }
