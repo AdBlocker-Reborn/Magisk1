@@ -13,7 +13,9 @@ class RequestAuthentication: ActivityResultContract<Unit, Boolean>() {
         context.getSystemService(KeyguardManager::class.java)
             .createConfirmDeviceCredentialIntent(null, null)
 
-    override fun parseResult(resultCode: Int, intent: Intent?) =
-        Log.d("aviraxp", "result $resultCode")
-        resultCode == Activity.RESULT_OK
+    override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+        val isAuthenticationSuccessful = resultCode == Activity.RESULT_OK
+        Log.d("aviraxp", "Authentication result: $resultCode $isAuthenticationSuccessful")
+        return isAuthenticationSuccessful
+    }
 }
